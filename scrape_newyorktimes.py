@@ -205,11 +205,22 @@ def parse_html_article_body(soup: BeautifulSoup) -> str:
 
         body_section = soup.find("article") or soup
 
-    paragraphs = []
+        paragraphs = []
+        junk_phrases = [
+        "We are having trouble retrieving the article content",
+        "Please enable JavaScript in your browser settings",
+        "Thank you for your patience while we verify access",
+        "Already a subscriber? Log in",
+        "Want all of The Times? Subscribe",
+        ]
+
     for p in body_section.find_all("p"):
         text = p.get_text(" ", strip=True)
-        if text:
-            paragraphs.append(text)
+        if not text:
+            continue
+        if any(phrase in text for phrase in junk_phrases):
+            continue
+        paragraphs.append(text)
 
 
     cleaned = []
