@@ -214,13 +214,13 @@ def parse_html_article_body(soup: BeautifulSoup) -> str:
         "Want all of The Times? Subscribe",
         ]
 
-    for p in body_section.find_all("p"):
-        text = p.get_text(" ", strip=True)
-        if not text:
-            continue
-        if any(phrase in text for phrase in junk_phrases):
-            continue
-        paragraphs.append(text)
+        for p in body_section.find_all("p"):
+            text = p.get_text(" ", strip=True)
+            if not text:
+                continue
+            if any(phrase in text for phrase in junk_phrases):
+                continue
+            paragraphs.append(text)
 
 
     cleaned = []
